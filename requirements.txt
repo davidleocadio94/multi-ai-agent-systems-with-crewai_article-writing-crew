@@ -1,4 +1,4 @@
-crewai>=0.30.0,<0.80.0
+crewai>=0.30.0,<0.41.0
 crewai_tools>=0.1.6
 langchain_community>=0.0.29
 gradio==5.12.0
