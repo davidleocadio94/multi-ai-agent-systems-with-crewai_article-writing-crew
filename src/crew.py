@@ -107,4 +107,7 @@ def run_crew(topic: str) -> str:
     crew = create_crew()
     result = crew.kickoff(inputs={"topic": topic})
 
-    return result.raw
+    # Handle both string and CrewOutput object results
+    if hasattr(result, 'raw'):
+        return result.raw
+    return str(result)
