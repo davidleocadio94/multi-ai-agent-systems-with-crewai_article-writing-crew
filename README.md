@@ -1,15 +1,3 @@
----
-title: Article Writing Crew
-emoji: ✍️
-colorFrom: blue
-colorTo: purple
-sdk: gradio
-sdk_version: 5.12.0
-app_file: app.py
-pinned: false
-python_version: "3.11"
----
-
 # Article Writing Crew
 
 [![Live Demo](https://img.shields.io/badge/Live%20Demo-HuggingFace%20Spaces-blue)](https://huggingface.co/spaces/davidleocadio94DLAI/multi-ai-agent-systems-with-crewai_article-writing-crew)
