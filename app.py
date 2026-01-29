@@ -4,13 +4,19 @@ import gradio as gr
 from src.crew import run_crew
 
 
-def generate_article(topic: str, history: list) -> str:
+def generate_article(topic: str, progress=gr.Progress()) -> str:
     """Generate an article on the given topic using the multi-agent crew."""
     if not topic.strip():
         return "Please enter a topic to write about."
 
     try:
+        progress(0, desc="Starting multi-agent crew...")
+        progress(0.1, desc="Content Planner: Researching trends and creating outline...")
+
+        # Run the crew (this is where the actual work happens)
         result = run_crew(topic)
+
+        progress(1.0, desc="Article complete!")
         return result
     except Exception as e:
         return f"Error generating article: {str(e)}"
@@ -30,6 +36,8 @@ with gr.Blocks(title="Article Writing Crew", theme=gr.themes.Soft()) as demo:
         3. **Editor** - Polishes the final piece
 
         Enter a topic below and watch the agents collaborate!
+
+        *Note: Generation takes 1-3 minutes as multiple AI agents work together.*
         """
     )
 
@@ -55,13 +63,13 @@ with gr.Blocks(title="Article Writing Crew", theme=gr.themes.Soft()) as demo:
     )
 
     submit_btn.click(
-        fn=lambda topic: generate_article(topic, []),
+        fn=generate_article,
         inputs=topic_input,
         outputs=output,
     )
 
     topic_input.submit(
-        fn=lambda topic: generate_article(topic, []),
+        fn=generate_article,
         inputs=topic_input,
         outputs=output,
     )
