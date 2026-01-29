@@ -4,22 +4,32 @@ import gradio as gr
 from src.crew import run_crew
 
 
-def generate_article(topic: str, progress=gr.Progress()) -> str:
+def generate_article(topic: str):
     """Generate an article on the given topic using the multi-agent crew."""
     if not topic.strip():
-        return "Please enter a topic to write about."
+        yield "Please enter a topic to write about."
+        return
 
     try:
-        progress(0, desc="Starting multi-agent crew...")
-        progress(0.1, desc="Content Planner: Researching trends and creating outline...")
+        # Show processing status
+        yield """## Processing...
+
+The multi-agent crew is working on your article. This typically takes 1-3 minutes.
+
+**Current Status:**
+1. Content Planner - Researching trends and creating outline...
+2. Content Writer - (waiting)
+3. Editor - (waiting)
+
+Please wait..."""
 
         # Run the crew (this is where the actual work happens)
         result = run_crew(topic)
 
-        progress(1.0, desc="Article complete!")
-        return result
+        # Return the final result
+        yield result
     except Exception as e:
-        return f"Error generating article: {str(e)}"
+        yield f"Error generating article: {str(e)}"
 
 
 # Create Gradio interface
